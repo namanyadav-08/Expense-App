@@ -121,11 +121,3 @@ cd frontend && npm run dev
 # Seed database with sample data
 cd backend && npm run seed
 ```
-
-## Git Commit Strategy
-
-See [COMMIT_PLAN.md](./COMMIT_PLAN.md) for the 5-day commit schedule.
-
-## License
-
-MIT
