@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Sora', sans-serif;
+  background-color: #F9FAFB;
+  background-image:
+    radial-gradient(#D0D5DD 1px, transparent 1px),
+    radial-gradient(120% 60% at 50% -10%, #EEF1F5 0%, #F9FAFB 45%);
+  background-size: 16px 16px, 100% 100%;
+  background-attachment: fixed;
+}
