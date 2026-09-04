@@ -128,6 +128,8 @@ const submitReport = asyncHandler(async (req, res) => {
   const report = await loadOwnedReport(req.params.id, req.user, 'Draft')
   if (!await ExpenseLine.countDocuments({ report: report._id }))
     throw new ApiError(400, 'Add at least one expense line before submitting')
+  if (!report.assignedApprovers.length)
+    throw new ApiError(400, 'Assign at least one approver before submitting')
 
   // Guarded on Draft so two concurrent submits produce one transition and one audit row.
   const updated = await ExpenseReport.findOneAndUpdate(

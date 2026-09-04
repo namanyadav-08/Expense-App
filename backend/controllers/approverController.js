@@ -9,14 +9,17 @@ const BULK_LIMIT = 100
 // The update matched nothing. Re-read to say why, so callers get a real reason
 // rather than a bare 404 — this is also what the bulk response reports per report.
 const explainMiss = async (reportId, approver, requiredStatus) => {
-  const report = await ExpenseReport.findById(reportId).select('status owner title').lean()
-  if (!report) return { status: 404, message: 'Report not found', title: null }
+  const report = await ExpenseReport.findById(reportId).select('status owner title assignedApprovers').lean()
+  if (!report) return { status: 404, message: 'Report not found', title: null, selfOwned: false }
   if (sameId(report.owner, approver._id))
-    return { status: 403, message: 'You cannot decide on your own report', title: report.title }
+    return { status: 403, message: 'You cannot decide on your own report', title: report.title, selfOwned: true }
+  if (!report.assignedApprovers.some(id => sameId(id, approver._id)))
+    return { status: 403, message: 'You are not assigned to this report', title: report.title, selfOwned: false }
   return {
     status: 409,
     message: `Report is in '${report.status}' status, not '${requiredStatus}'`,
-    title: report.title
+    title: report.title,
+    selfOwned: false
   }
 }
 
@@ -34,7 +37,12 @@ const decide = async ({ reportId, approver, action, reason }) => {
     : { status: 'Draft', rejectionReason: reason }
 
   const report = await ExpenseReport.findOneAndUpdate(
-    { _id: reportId, status: 'Submitted', owner: { $ne: approver._id } },
+    {
+      _id: reportId,
+      status: 'Submitted',
+      owner: { $ne: approver._id },
+      assignedApprovers: approver._id
+    },
     { $set: change },
     { new: true }
   )
@@ -77,7 +85,12 @@ const reject = asyncHandler(async (req, res) => {
 
 const markPaid = asyncHandler(async (req, res) => {
   const report = await ExpenseReport.findOneAndUpdate(
-    { _id: req.params.id, status: 'Approved', owner: { $ne: req.user._id } },
+    {
+      _id: req.params.id,
+      status: 'Approved',
+      owner: { $ne: req.user._id },
+      assignedApprovers: req.user._id
+    },
     { $set: { status: 'Paid', paidAt: new Date() } },
     { new: true }
   )
@@ -115,7 +128,7 @@ const bulkAction = asyncHandler(async (req, res) => {
       results.push(outcome.ok
         ? { reportId: id, title: outcome.report.title, success: true, action }
         : { reportId: id, title: outcome.title, success: false, reason: outcome.message,
-            selfOwned: outcome.status === 403 })
+            selfOwned: outcome.selfOwned })
     } catch (err) {
       results.push({ reportId: id, success: false, reason: err.message, selfOwned: false })
     }
