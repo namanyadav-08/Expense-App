@@ -59,8 +59,8 @@ export default function AllReports() {
   const to   = Math.min(meta.page * filters.limit, meta.total)
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+      <div className="flex flex-wrap gap-3 justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-[#101828] tracking-tight">All Reports</h1>
         <button
           onClick={exportCSV}
@@ -104,7 +104,8 @@ export default function AllReports() {
         <p className="text-center py-10 text-sm text-[#667085]">No reports found</p>
       ) : (
         <>
-          <table className="w-full text-sm bg-white border border-[#EAECF0] rounded-xl overflow-hidden">
+          <div className="overflow-x-auto rounded-xl">
+          <table className="w-full min-w-[760px] text-sm bg-white border border-[#EAECF0] rounded-xl overflow-hidden">
             <thead>
               <tr className="text-left text-[#667085] border-b border-[#EAECF0] bg-[#F9FAFB]">
                 <th className="px-4 py-3 font-medium">Title</th>
@@ -130,6 +131,7 @@ export default function AllReports() {
               ))}
             </tbody>
           </table>
+          </div>
 
           {meta.pages > 1 && (
             <div className="flex gap-1.5 justify-center mt-4">

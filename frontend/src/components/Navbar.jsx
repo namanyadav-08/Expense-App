@@ -76,14 +76,14 @@ export default function Navbar() {
   }, [isApprover])
 
   return (
-    <div className=" z-40 px-4 mb-8">
-      <nav className="bg-[#101828] rounded-2xl shadow-lg px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-10">
-        <div className="flex items-center gap-2">
+    <div className="z-40 px-2 sm:px-4 mb-6 sm:mb-8">
+      <nav className="bg-[#101828] rounded-2xl shadow-lg px-3 sm:px-6 min-h-16 py-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-4 sm:gap-10 min-w-0">
+        <div className="flex items-center gap-2 shrink-0">
   <div className="w-7 h-7 rounded-lg bg-white text-[#101828] text-sm font-bold flex items-center justify-center">E</div>
   <span className="font-bold text-white text-base tracking-tight">ExpenseApp</span>
 </div>
-          <div className="flex items-center gap-9">
+          <div className="flex items-center gap-5 sm:gap-9 overflow-x-auto whitespace-nowrap pb-1">
             <NavItem to="/dashboard">Dashboard</NavItem>
             <NavItem to="/reports">My Reports</NavItem>
             {isApprover && (

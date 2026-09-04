@@ -92,8 +92,8 @@ export default function ReportDetail() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="flex justify-between items-start mb-6">
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
         <div className="flex-1">
           {editHeader ? (
             <div className="space-y-2 max-w-md">
@@ -129,7 +129,7 @@ export default function ReportDetail() {
           )}
         </div>
 
-        <div className="flex flex-col gap-2 items-end">
+        <div className="flex flex-col gap-2 items-start sm:items-end w-full sm:w-auto">
           {/* A rejected draft resubmits from its own panel below, so hide the plain Submit here. */}
           {isOwner && isDraft && !isRejected && (
             <button onClick={() => action(`/reports/${id}/submit`)} disabled={pending} className={primaryBtn}>Submit</button>
@@ -176,7 +176,8 @@ export default function ReportDetail() {
         {lines.length === 0 ? (
           <p className="text-[#667085] text-sm">No lines yet</p>
         ) : (
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px] text-sm">
             <thead>
               <tr className="text-left text-[#667085] border-b border-[#EAECF0]">
                 <th className="pb-2 font-medium">Date</th>
@@ -216,6 +217,7 @@ export default function ReportDetail() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
         {canEdit && editingLine === null && <LineItemForm reportId={id} onSaved={load} />}
         {!canEdit && isOwner && <p className="text-sm text-[#98A2B3] mt-3 italic">Report is {report.status} — editing disabled.</p>}

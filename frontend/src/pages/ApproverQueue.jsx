@@ -57,7 +57,7 @@ export default function ApproverQueue() {
   }
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold text-[#101828] tracking-tight mb-4">Approver Queue</h1>
 
       <AlertsPanel />
@@ -73,7 +73,8 @@ export default function ApproverQueue() {
         <p className="text-center text-sm text-[#667085] py-10">No reports</p>
       ) : (
         <>
-          <table className="w-full text-sm bg-white border border-[#EAECF0] rounded-xl overflow-hidden">
+          <div className="overflow-x-auto rounded-xl">
+          <table className="w-full min-w-[700px] text-sm bg-white border border-[#EAECF0] rounded-xl overflow-hidden">
             <thead>
               <tr className="text-left text-[#667085] border-b border-[#EAECF0] bg-[#F9FAFB]">
                 <th className="p-3"><input type="checkbox" className="accent-black" onChange={e => setSelected(e.target.checked ? reports.map(r => r._id) : [])} /></th>
@@ -115,6 +116,7 @@ export default function ApproverQueue() {
               })}
             </tbody>
           </table>
+          </div>
 
           {tabValue === 'all' && pages > 1 && (
             <div className="flex items-center justify-between mt-4 text-sm text-[#667085]">

@@ -57,7 +57,7 @@ export default function Dashboard() {
     ]
 
     return (
-      <div className="p-6 max-w-5xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-5xl mx-auto">
         <h1 className="text-2xl font-bold text-[#101828] tracking-tight mb-6">My Dashboard</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -75,7 +75,7 @@ export default function Dashboard() {
           />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 mb-6">
           {stats.map(s => (
             <div key={s.label} className={statCard}>
               <div className={statValue}>{s.value ?? 0}</div>
@@ -85,7 +85,7 @@ export default function Dashboard() {
         </div>
 
         {/* Recent activity on the owner's reports — sourced from fields the API already returns. */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8">
           <div className={statCard}>
             <div className={statValue}>{data.approvedThisWeek ?? 0}</div>
             <div className={statLabel}>Approved This Week</div>
@@ -122,7 +122,7 @@ export default function Dashboard() {
   ]
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold text-[#101828] tracking-tight mb-6">Approver Dashboard</h1>
 
       <div className="mb-6">
@@ -134,7 +134,7 @@ export default function Dashboard() {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8">
         {stats.map(s => (
           <div key={s.label} className={statCard}>
             <div className={statValue}>{s.value ?? 0}</div>
